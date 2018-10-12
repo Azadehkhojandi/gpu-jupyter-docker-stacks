@@ -1,6 +1,3 @@
-lsb_release -a
-nvcc --version
-
 
 https://azure.microsoft.com/en-us/global-infrastructure/services/?products=virtual-machines
 https://github.com/NVIDIA/nvidia-docker
@@ -28,3 +25,12 @@ docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 
 sudo nvidia-docker build -t azadehkhojandi/pygpu2 -f az.dockerfile .
 sudo nvidia-docker run -it azadehkhojandi/pygpu2
+
+#check Pytorch and cuda
+lsb_release -a
+nvcc --version
+python
+import  torch
+torch.cuda.is_available()
+if torch.cuda.current_device():
+  torch.cuda.current_device(torch.cuda.get_device_name(0))
