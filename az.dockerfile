@@ -1,42 +1,70 @@
+#https://hub.docker.com/r/ceshine/cuda-pytorch/~/dockerfile/
+
 FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 
 ARG PYTHON_VERSION=3.6
 ENV PYTORCH_VERSION="0.3.1"
 ENV TORCHVISION_VERION="0.2.0"
+ARG CONDA_PYTHON_VERSION=3
+ARG CONDA_DIR=/opt/conda
+ARG USERNAME=docker
+ARG USERID=1000
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-         build-essential \
-         cmake \
-         git \
-         curl \
-         vim \
-         ca-certificates \
-         libjpeg-dev \
-         libpng-dev &&\
+# Instal basic utilities
+RUN apt-get update &&\
+    apt-get install -y --no-install-recommends \
+    sudo \
+    cmake \
+    git \
+    wget \
+    curl \
+    unzip\
+    vim \
+    bzip2\
+    build-essential \
+    ca-certificates \
+    libjpeg-dev \
+    libpng-dev &&\
+    apt-get clean && \
      rm -rf /var/lib/apt/lists/*
 
 
-RUN curl -o ~/miniconda.sh -O  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
-     chmod +x ~/miniconda.sh && \
-     ~/miniconda.sh -b -p /opt/conda && \
-     rm ~/miniconda.sh && \
-     /opt/conda/bin/conda install -y python=$PYTHON_VERSION numpy pyyaml scipy ipython mkl mkl-include cython typing && \
-     /opt/conda/bin/conda  install --yes pytorch==${PYTORCH_VERSION} torchvision cuda90 -c pytorch && \
-     /opt/conda/bin/conda clean -ya
-ENV PATH /opt/conda/bin:$PATH
+# Install miniconda
 
 
+ENV PATH $CONDA_DIR/bin:$PATH
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && \
+  wget --quiet https://repo.continuum.io/miniconda/Miniconda$CONDA_PYTHON_VERSION-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+  echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
+  /bin/bash /tmp/miniconda.sh -b -p $CONDA_DIR && \
+  rm -rf /tmp/* && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
-# This must be done before pip so that requirements.txt is available
-#WORKDIR /opt/pytorch
-#COPY . .
+# Create the user
+RUN useradd --create-home -s /bin/bash --no-user-group -u $USERID $USERNAME && \
+    chown $USERNAME $CONDA_DIR -R && \
+    adduser $USERNAME sudo && \
+    echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-#RUN git submodule update --init
-#RUN TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1 7.0+PTX" TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
-#    CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
-#    pip install -v .
+USER $USERNAME
+WORKDIR /home/$USERNAME
 
-#RUN git clone https://github.com/pytorch/vision.git && cd vision && pip install -v .
+RUN conda install -y python=$PYTHON_VERSION && \
+  conda install -y h5py scikit-learn matplotlib seaborn \
+  pandas mkl-service cython && \
+  conda clean -tipsy
+
+RUN  pip install --upgrade pip && \
+  pip install pillow-simd && \
+  pip install http://download.pytorch.org/whl/cu90/torch-0.4.1-cp36-cp36m-linux_x86_64.whl && \
+  pip install torchvision && rm -rf ~/.cache/pip
+
+ENV CUDA_HOME=/usr/local/cuda
+ENV CUDA_ROOT=$CUDA_HOME
+ENV PATH=$PATH:$CUDA_ROOT/bin:$HOME/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_ROOT/lib64
+
 
 WORKDIR /workspace
 RUN chmod -R a+w /workspace
