@@ -9,6 +9,7 @@ ARG CONDA_DIR=/opt/conda
 ARG USERNAME=docker
 ARG USERID=1000
 
+
 # Instal basic utilities
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends \
@@ -54,10 +55,11 @@ RUN conda install -y python=$PYTHON_VERSION && \
   pandas mkl-service cython && \
   conda clean -tipsy
 
+#torch version 0.3.1 torchvision
 RUN  pip install --upgrade pip && \
   pip install pillow-simd && \
-  pip install http://download.pytorch.org/whl/cu90/torch-0.4.1-cp36-cp36m-linux_x86_64.whl && \
-  pip install torchvision && rm -rf ~/.cache/pip
+  pip install http://download.pytorch.org/whl/cu90/torch-0.3.1-cp36-cp36m-linux_x86_64.whl && \
+  pip install torchvision==0.2.0 && rm -rf ~/.cache/pip
 
 ENV CUDA_HOME=/usr/local/cuda
 ENV CUDA_ROOT=$CUDA_HOME
