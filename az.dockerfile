@@ -8,7 +8,7 @@ ARG CONDA_PYTHON_VERSION=3
 ARG CONDA_DIR=/opt/conda
 ARG USERNAME=docker
 ARG USERID=1000
-
+Arg PYTHON_VERSION=3.6
 
 # Instal basic utilities
 RUN apt-get update &&\
@@ -50,7 +50,10 @@ RUN useradd --create-home -s /bin/bash --no-user-group -u $USERID $USERNAME && \
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
-
+RUN conda install -y python=$PYTHON_VERSION && \
+  conda install -y h5py scikit-learn matplotlib seaborn \
+  pandas mkl-service cython && \
+  conda clean -tipsy
 
 #torch version 0.3.1 torchvision
 RUN  pip install --upgrade pip && \
