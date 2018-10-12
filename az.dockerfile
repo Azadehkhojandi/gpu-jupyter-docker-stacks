@@ -1,4 +1,5 @@
 #https://hub.docker.com/r/ceshine/cuda-pytorch/~/dockerfile/
+#https://tsaprailis.com/2017/10/10/Docker-for-data-science-part-1-building-jupyter-container/
 
 FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 
@@ -8,7 +9,7 @@ ARG CONDA_PYTHON_VERSION=3
 ARG CONDA_DIR=/opt/conda
 ARG USERNAME=docker
 ARG USERID=1000
-Arg PYTHON_VERSION=3.6
+ENV PYTHON_VERSION=3.6
 
 # Instal basic utilities
 RUN apt-get update &&\
@@ -47,8 +48,13 @@ RUN useradd --create-home -s /bin/bash --no-user-group -u $USERID $USERNAME && \
     adduser $USERNAME sudo && \
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+# Change to the new user
 USER $USERNAME
+
+# Set the container working directory to the user home folder
 WORKDIR /home/$USERNAME
+
+
 
 RUN conda install -y python=$PYTHON_VERSION && \
   conda install -y h5py scikit-learn matplotlib seaborn \
@@ -60,6 +66,13 @@ RUN  pip install --upgrade pip && \
   pip install pillow-simd && \
   pip install http://download.pytorch.org/whl/cu90/torch-0.3.1-cp36-cp36m-linux_x86_64.whl && \
   pip install torchvision==0.2.0 && rm -rf ~/.cache/pip
+
+# Install jupyter
+RUN pip install jupyter
+
+# Start the jupyter notebook
+ENTRYPOINT ["jupyter", "notebook", "--ip=*"]
+
 
 ENV CUDA_HOME=/usr/local/cuda
 ENV CUDA_ROOT=$CUDA_HOME
