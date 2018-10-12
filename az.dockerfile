@@ -50,10 +50,7 @@ RUN useradd --create-home -s /bin/bash --no-user-group -u $USERID $USERNAME && \
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
-RUN conda install -y python=$PYTHON_VERSION && \
-  conda install -y h5py scikit-learn matplotlib seaborn \
-  pandas mkl-service cython && \
-  conda clean -tipsy
+
 
 #torch version 0.3.1 torchvision
 RUN  pip install --upgrade pip && \
