@@ -23,14 +23,17 @@ sudo pkill -SIGHUP dockerd
 docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 
 
-sudo nvidia-docker build -t azadehkhojandi/pygpu2 -f az.dockerfile .
-sudo nvidia-docker run -it azadehkhojandi/pygpu2
+sudo nvidia-docker build -t azadehkhojandi/pygpu3 -f az.dockerfile .
+sudo docker image list
+sudo nvidia-docker run -it azadehkhojandi/pygpu3
+//sudo nvidia-docker run -it -p 8888:8888 azadehkhojandi/pygpu3 /bin/bash
 
 #check Pytorch and cuda
 lsb_release -a
 nvcc --version
 python
 import  torch
+torch.__version__
 torch.cuda.is_available()
 if torch.cuda.current_device():
-  torch.cuda.current_device(torch.cuda.get_device_name(0))
+  torch.cuda.get_device_name(torch.cuda.current_device())

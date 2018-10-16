@@ -68,10 +68,10 @@ RUN  pip install --upgrade pip && \
   pip install torchvision==0.2.0 && rm -rf ~/.cache/pip
 
 # Install jupyter
-RUN pip install jupyter
+#RUN pip install jupyter
 
 # Start the jupyter notebook
-ENTRYPOINT ["jupyter", "notebook", "--ip=*"]
+#ENTRYPOINT ["jupyter", "notebook", "--ip=*"]
 
 
 ENV CUDA_HOME=/usr/local/cuda
