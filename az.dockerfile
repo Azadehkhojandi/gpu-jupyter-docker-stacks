@@ -81,9 +81,7 @@ RUN groupadd wheel -g 11 && \
 
 USER $NB_UID
 
-# Setup work directory for backward-compatibility
-RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER
+
 
 
 
@@ -167,5 +165,14 @@ RUN fix-permissions /etc/jupyter/
 RUN chmod +x /usr/local/bin/start-*
 
 # Switch back to jovyan to avoid accidental container runs as root
+
 USER $NB_UID
+
+# Setup work directory for backward-compatibility
+RUN mkdir /home/$NB_USER/work && \
+    fix-permissions /home/$NB_USER
+
+RUN echo "working directory" > /home/$NB_USER/work
+
+WORKDIR /home/$NB_USER/work
 
