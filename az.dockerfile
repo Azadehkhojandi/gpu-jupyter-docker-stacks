@@ -161,22 +161,19 @@ RUN chmod +x /usr/local/bin/start-*
 
 USER root
 EXPOSE 8888
-WORKDIR /home/$NB_USER/work
-# Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["start-notebook.sh"]
-
-# Switch back to jovyan to avoid accidental container runs as root
-
-USER $NB_UID
 
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER && \
     fix-permissions /home/$NB_USER/work
+
 RUN echo  /home/$NB_USER/work
-RUN cd /home/$NB_USER/work
+WORKDIR /home/$NB_USER/work
 
+# Configure container startup
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["start-notebook.sh"]
 
-
+# Switch back to jovyan to avoid accidental container runs as root
+USER $NB_UID
 
