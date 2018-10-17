@@ -63,9 +63,9 @@ ENV CONDA_DIR=/opt/conda \
 
 
 
-ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
+COPY jupyter/fix-permissions /usr/local/bin/fix-permissions
 
-RUN sudo chmod g+w /usr/local/bin/
+
 
 # Create jovyan user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
@@ -141,7 +141,7 @@ COPY jupyter/start.sh /usr/local/bin/
 COPY jupyter/start-notebook.sh /usr/local/bin/
 COPY jupyter/start-singleuser.sh /usr/local/bin/
 COPY jupyter/jupyter_notebook_config.py /etc/jupyter/
-RUN  jupyter/fix-permissions /etc/jupyter/
+RUN  fix-permissions /etc/jupyter/
 
 
 
