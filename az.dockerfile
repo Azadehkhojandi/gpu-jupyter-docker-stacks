@@ -86,7 +86,11 @@ RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
 
 
+USER root
+
 ARG CONDA_PYTHON_VERSION=3
+
+
 
 ENV PATH $CONDA_DIR/bin:$PATH
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && \
@@ -94,9 +98,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
   echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
   /bin/bash /tmp/miniconda.sh -b -p $CONDA_DIR && \
   rm -rf /tmp/* && \
-  apt-get clean 
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 
+USER $NB_UID
 
 # Install Tini
 RUN conda install --quiet --yes 'tini=0.18.0' && \
