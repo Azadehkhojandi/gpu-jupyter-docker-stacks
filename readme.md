@@ -44,7 +44,7 @@ sudo nvidia-docker push azadehkhojandi/pytorchgpu
 $ docker run --rm -p 8888:8888 -e  -v "$PWD":/home/jovyan/work jupyter/minimal-notebook
 $ sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
 
-http://13.75.216.42:8888/?token=af57f55d13ab6956391faa0ff460a965b7392d9952efdd3f
+http://52.187.231.146:8888?token=243f399ba6aff33fd35b16c75e5ac80aaa2da0d33540890b
 
 docker run -d -p 8888:8888 -v /notebook:/notebook xblaster/tensorflow-jupyter
 

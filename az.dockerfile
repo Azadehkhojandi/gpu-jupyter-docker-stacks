@@ -171,8 +171,9 @@ USER $NB_UID
 RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER && \
     fix-permissions /home/$NB_USER/work
-
 RUN echo  /home/$NB_USER/work
+RUN cd /home/$NB_USER/work
+
 
 
 
