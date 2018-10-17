@@ -41,6 +41,9 @@ sudo nvidia-docker push azadehkhojandi/pytorchgpu
 -p <host_port>:<container_port>
 <host_directory>:<container_directory>
 
+$ docker run --rm -p 8888:8888 -e  -v "$PWD":/home/jovyan/work jupyter/minimal-notebook
+
+
 docker run -d -p 8888:8888 -v /notebook:/notebook xblaster/tensorflow-jupyter
 
 
