@@ -65,7 +65,7 @@ ENV CONDA_DIR=/opt/conda \
 
 ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
 
-RUN [ ! -f /usr/local/bin/fix-permissions ] && echo "File does not exist"
+
 
 
 
