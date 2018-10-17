@@ -63,7 +63,7 @@ ENV CONDA_DIR=/opt/conda \
 
 
 
-COPY jupyter/fix-permissions /usr/local/bin/fix-permissions
+COPY jupyter/fix-permissions /usr/local/bin
 
 
 
