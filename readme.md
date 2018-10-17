@@ -37,6 +37,12 @@ sudo nvidia-docker push azadehkhojandi/pytorchgpu
 
 //sudo nvidia-docker run -it -p 8888:8888 azadehkhojandi/pygpu3 /bin/bash
 
+-p <host_port>:<container_port>
+<host_directory>:<container_directory>
+
+docker run -d -p 8888:8888 -v /notebook:/notebook xblaster/tensorflow-jupyter
+
+
 #check Pytorch and cuda
 lsb_release -a
 nvcc --version
@@ -103,4 +109,6 @@ plt.savefig('result.jpg')
 
 `python demo.py`
 you should be able to see 'result.jpg' created 
+
+
 
