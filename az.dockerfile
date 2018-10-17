@@ -148,13 +148,6 @@ RUN  pip install --upgrade pip && \
 
 USER root
 
-EXPOSE 8888
-
-
-# Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["start-notebook.sh"]
-
 # Add local files as late as possible to avoid cache busting
 COPY jupyter/start.sh /usr/local/bin/
 COPY jupyter/start-notebook.sh /usr/local/bin/
@@ -164,15 +157,22 @@ RUN fix-permissions /etc/jupyter/
 
 RUN chmod +x /usr/local/bin/start-*
 
+EXPOSE 8888
+
+# Configure container startup
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["start-notebook.sh"]
+
 # Switch back to jovyan to avoid accidental container runs as root
 
 USER $NB_UID
 
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER
+    fix-permissions /home/$NB_USER && \
+    fix-permissions /home/$NB_USER/work
 
 RUN echo "working directory" > /home/$NB_USER/work
 
-WORKDIR /home/$NB_USER/work
+
 
