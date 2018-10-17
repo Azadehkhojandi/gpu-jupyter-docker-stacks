@@ -85,21 +85,17 @@ USER $NB_UID
 RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
 
-# Install conda as jovyan and check the md5 sum provided on the download site
-ENV MINICONDA_VERSION 4.5.4
 
+ARG CONDA_PYTHON_VERSION=3
 
 ENV PATH $CONDA_DIR/bin:$PATH
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && \
-  wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+  wget --quiet https://repo.continuum.io/miniconda/Miniconda$CONDA_PYTHON_VERSION-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
   echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
   /bin/bash /tmp/miniconda.sh -b -p $CONDA_DIR && \
   rm -rf /tmp/* && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /home/$NB_USER/.cache/yarn && \
-  fix-permissions $CONDA_DIR && \
-  fix-permissions /home/$NB_USER
+  rm -rf /var/lib/apt/lists/*
 
 
 
