@@ -136,34 +136,6 @@ RUN conda install --quiet --yes \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-USER root
-
-EXPOSE 8888
-WORKDIR $HOME
-
-# Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["start-notebook.sh"]
-
-# Add local files as late as possible to avoid cache busting
-COPY jupyter/start.sh /usr/local/bin/
-COPY jupyter/start-notebook.sh /usr/local/bin/
-COPY jupyter/start-singleuser.sh /usr/local/bin/
-COPY jupyter/jupyter_notebook_config.py /etc/jupyter/
-RUN  fix-permissions /etc/jupyter/
-
-
-
-
-
-
-# Change to the new user
-USER $USERNAME
-
-# Set the container working directory to the user home folder
-WORKDIR /home/$USERNAME
-
-
 
 RUN conda install -y h5py scikit-learn matplotlib seaborn scikit-image  scipy   \
   pandas mkl-service cython && \
@@ -176,7 +148,22 @@ RUN  pip install --upgrade pip && \
   pip install torchvision==0.2.0 && rm -rf ~/.cache/pip
 
 
+USER root
+
+EXPOSE 8888
+WORKDIR $HOME
+
+# Configure container startup
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["start-notebook.sh"]
+
+# Add local files as late as possible to avoid cache busting
+COPY start.sh /usr/local/bin/
+COPY start-notebook.sh /usr/local/bin/
+COPY start-singleuser.sh /usr/local/bin/
+COPY jupyter_notebook_config.py /etc/jupyter/
+RUN fix-permissions /etc/jupyter/
+
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
-
 
