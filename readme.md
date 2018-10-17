@@ -30,6 +30,7 @@ docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 sudo docker login
 
 sudo nvidia-docker build -t azadehkhojandi/pytorchgpu -f az.dockerfile .
+sudo nvidia-docker build -t azadehkhojandi/pytorchgpujupyter -f az.dockerfile .
 sudo docker image list
 sudo nvidia-docker run -it azadehkhojandi/pytorchgpu
 sudo nvidia-docker tag {imageid} azadehkhojandi/pytorchgpu:barebone
