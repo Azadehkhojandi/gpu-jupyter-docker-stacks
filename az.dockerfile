@@ -151,7 +151,7 @@ RUN  pip install --upgrade pip && \
 USER root
 
 EXPOSE 8888
-WORKDIR $HOME
+
 
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
