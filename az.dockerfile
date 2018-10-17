@@ -71,7 +71,7 @@ ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
 RUN chmod +x /usr/local/bin/fix-permissions
 
 
-RUN echo $HOME
+
 
 
 # Create jovyan user with UID=1000 and in the 'users' group
@@ -87,7 +87,9 @@ RUN groupadd wheel -g 11 && \
 
 USER $NB_UID
 
-
+# Setup work directory for backward-compatibility
+RUN mkdir /home/$NB_USER/work && \
+    fix-permissions /home/$NB_USER
 
 
 # Install conda as jovyan and check the md5 sum provided on the download site
@@ -108,7 +110,6 @@ RUN cd /tmp && \
     fix-permissions /home/$NB_USER
 
 
-USER $NB_UID
 
 # Install Tini
 RUN conda install --quiet --yes 'tini=0.18.0' && \
@@ -150,29 +151,27 @@ RUN  pip install --upgrade pip && \
 
 USER root
 
+
+
+RUN chmod +x /usr/local/bin/start-*
+
+USER root
+
+EXPOSE 8888
+WORKDIR $HOME
+
+# Configure container startup
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["start-notebook.sh"]
+
+RUN echo  $HOME
+
 # Add local files as late as possible to avoid cache busting
 COPY jupyter/start.sh /usr/local/bin/
 COPY jupyter/start-notebook.sh /usr/local/bin/
 COPY jupyter/start-singleuser.sh /usr/local/bin/
 COPY jupyter/jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
-
-RUN chmod +x /usr/local/bin/start-*
-
-USER root
-EXPOSE 8888
-
-# Setup work directory for backward-compatibility
-RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER && \
-    fix-permissions /home/$NB_USER/work
-
-RUN echo  /home/$NB_USER/work
-WORKDIR /home/$NB_USER/work
-
-# Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["start-notebook.sh"]
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID

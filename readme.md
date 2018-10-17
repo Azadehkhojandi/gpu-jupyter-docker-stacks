@@ -39,10 +39,10 @@ sudo nvidia-docker push azadehkhojandi/pytorchgpu
 //sudo nvidia-docker run -it -p 8888:8888 azadehkhojandi/pygpu3 /bin/bash
 
 docker pull jupyter/minimal-notebook
-docker run --rm -p 8888:8888  jupyter/minimal-notebook  -v "$PWD":/home/jovyan/work
-sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
-
-http://52.187.231.146:8888?token=243f399ba6aff33fd35b16c75e5ac80aaa2da0d33540890b
+sudo  docker run --rm -p 8888:8888  jupyter/minimal-notebook  -v "$PWD":/home/jovyan/work
+sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan
+sudo nvidia-docker run -it azadehkhojandi/pytorchgpujupyter
+http://104.210.69.179:8888/?token=ca124b48f49a5e31a4a9409286ed64084c90f93a08c6ba66
 
 
 
@@ -113,6 +113,11 @@ plt.savefig('result.jpg')
 
 `python demo.py`
 you should be able to see 'result.jpg' created 
+
+
+oneweek3@oneweek3:~/aztest$ sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
+[FATAL tini (8)] exec -v failed: No such file or directory
+
 
 
 
