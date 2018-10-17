@@ -65,6 +65,7 @@ ENV CONDA_DIR=/opt/conda \
 
 ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
 
+RUN ls /usr/local/bin/fix-permissions
 
 
 # Create jovyan user with UID=1000 and in the 'users' group
