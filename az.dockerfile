@@ -172,7 +172,7 @@ RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER && \
     fix-permissions /home/$NB_USER/work
 
-RUN echo "working directory" > /home/$NB_USER/work
+RUN echo  /home/$NB_USER/work
 
 
 
