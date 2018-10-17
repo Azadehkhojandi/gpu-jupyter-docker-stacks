@@ -157,8 +157,9 @@ RUN fix-permissions /etc/jupyter/
 
 RUN chmod +x /usr/local/bin/start-*
 
+USER root
 EXPOSE 8888
-
+WORKDIR $HOME
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
