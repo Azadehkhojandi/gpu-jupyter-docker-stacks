@@ -38,15 +38,13 @@ sudo nvidia-docker push azadehkhojandi/pytorchgpu
 
 //sudo nvidia-docker run -it -p 8888:8888 azadehkhojandi/pygpu3 /bin/bash
 
--p <host_port>:<container_port>
-<host_directory>:<container_directory>
-
-$ docker run --rm -p 8888:8888 -e  -v "$PWD":/home/jovyan/work jupyter/minimal-notebook
-$ sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
+docker pull jupyter/minimal-notebook
+docker run --rm -p 8888:8888  jupyter/minimal-notebook  -v "$PWD":/home/jovyan/work
+sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
 
 http://52.187.231.146:8888?token=243f399ba6aff33fd35b16c75e5ac80aaa2da0d33540890b
 
-docker run -d -p 8888:8888 -v /notebook:/notebook xblaster/tensorflow-jupyter
+
 
 
 #check Pytorch and cuda
