@@ -68,8 +68,7 @@ RUN chmod +x /usr/local/bin/fix-permissions
 
 
 RUN echo $HOME
-ENV HOME /home
-RUN echo $HOME
+
 
 # Create jovyan user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
@@ -83,10 +82,6 @@ RUN groupadd wheel -g 11 && \
     fix-permissions $CONDA_DIR
 
 USER $NB_UID
-
-
-
-
 
 
 ENV PATH $CONDA_DIR/bin:$PATH
@@ -162,7 +157,7 @@ RUN chmod +x /usr/local/bin/start-*
 
 USER root
 EXPOSE 8888
-WORKDIR $HOME
+WORKDIR /home/$NB_USER/work
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
