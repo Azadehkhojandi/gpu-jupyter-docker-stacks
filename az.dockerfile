@@ -94,8 +94,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
   echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
   /bin/bash /tmp/miniconda.sh -b -p $CONDA_DIR && \
   rm -rf /tmp/* && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  apt-get clean 
 
 
 
