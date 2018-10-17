@@ -64,6 +64,9 @@ ENV CONDA_DIR=/opt/conda \
 
 
 ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
+
+USER root
+
 # Create jovyan user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
 RUN groupadd wheel -g 11 && \
@@ -72,8 +75,8 @@ RUN groupadd wheel -g 11 && \
     mkdir -p $CONDA_DIR && \
     chown $NB_USER:$NB_GID $CONDA_DIR && \
     chmod g+w /etc/passwd && \
-    /usr/local/bin/fix-permissions $HOME && \
-    /usr/local/bin/fix-permissions $CONDA_DIR
+    fix-permissions $HOME && \
+    fix-permissions $CONDA_DIR
 
 USER $NB_UID
 
