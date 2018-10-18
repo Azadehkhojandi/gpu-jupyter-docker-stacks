@@ -149,11 +149,6 @@ RUN  pip install --upgrade pip && \
   pip install torchvision==0.2.0 && rm -rf ~/.cache/pip
 
 
-USER root
-
-
-
-RUN chmod +x /usr/local/bin/start-*
 
 USER root
 
@@ -172,6 +167,8 @@ COPY jupyter/start-notebook.sh /usr/local/bin/
 COPY jupyter/start-singleuser.sh /usr/local/bin/
 COPY jupyter/jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
+
+RUN chmod +x /usr/local/bin/start-*
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
