@@ -35,7 +35,7 @@ sudo  docker run --rm -p 8888:8888  jupyter/minimal-notebook  -v "$PWD":/home/jo
 
 #docker hub
 sudo docker pull azadehkhojandi/pytorchgpu
-sudo nvidia-docker run -it azadehkhojandi/pytorchgpu
+sudo nvidia-docker run -it azadehkhojandi/pytorchgpu  -v "$PWD":/home/jovyan/work
 
 sudo docker pull azadehkhojandi/pytorchgpujupyter
 sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
@@ -135,7 +135,8 @@ plt.savefig('result.jpg')
 you should be able to see 'result.jpg' created 
 
 
-
+oneweek3@oneweek3:~/aztest$ sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
+[FATAL tini (8)] exec -v failed: No such file or directory
 
 
 

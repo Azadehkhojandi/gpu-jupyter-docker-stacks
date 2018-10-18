@@ -89,7 +89,8 @@ USER $NB_UID
 
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER
+    fix-permissions /home/$NB_USER && \
+    fix-permissions /home/$NB_USER/work
 
 
 # Install conda as jovyan and check the md5 sum provided on the download site
@@ -169,7 +170,7 @@ COPY jupyter/jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
 
 RUN chmod +x /usr/local/bin/start-*
+RUN chmod 777 /home/$NB_USER/work
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
-
