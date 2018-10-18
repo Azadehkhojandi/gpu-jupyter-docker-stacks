@@ -26,35 +26,55 @@ sudo pkill -SIGHUP dockerd
 # Test nvidia-smi with the latest official CUDA image
 docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 
-
 sudo docker login
 
-sudo nvidia-docker build -t azadehkhojandi/pytorchgpu -f az.dockerfile .
-sudo nvidia-docker build -t azadehkhojandi/pytorchgpujupyter -f az.dockerfile .
-sudo docker image list
+#test jupyter 
+sudo docker pull jupyter/minimal-notebook
+sudo  docker run --rm -p 8888:8888  jupyter/minimal-notebook  -v "$PWD":/home/jovyan/work
+
+
+#docker hub
+sudo docker pull azadehkhojandi/pytorchgpu
 sudo nvidia-docker run -it azadehkhojandi/pytorchgpu
+
+sudo docker pull azadehkhojandi/pytorchgpujupyter
+sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
+
+
+
+#master branch
+sudo nvidia-docker build -t azadehkhojandi/pytorchgpu -f az.dockerfile .
+sudo docker image list
+
 sudo nvidia-docker tag {imageid} azadehkhojandi/pytorchgpu:barebone
 sudo nvidia-docker push azadehkhojandi/pytorchgpu
 
-//sudo nvidia-docker run -it -p 8888:8888 azadehkhojandi/pygpu3 /bin/bash
 
-docker pull jupyter/minimal-notebook
-sudo  docker run --rm -p 8888:8888  jupyter/minimal-notebook  -v "$PWD":/home/jovyan/work
-sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan
+#jupyter branch
+sudo nvidia-docker build -t azadehkhojandi/pytorchgpujupyter -f az.dockerfile .
+sudo docker image list
+sudo nvidia-docker tag {imageid} azadehkhojandi/pytorchgpujupyter:barebone
+sudo nvidia-docker push azadehkhojandi/pytorchgpujupyter
+sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
 sudo nvidia-docker run -it azadehkhojandi/pytorchgpujupyter
-http://104.210.69.179:8888/?token=ca124b48f49a5e31a4a9409286ed64084c90f93a08c6ba66
 
 
-
-
-#check Pytorch and cuda
+#GPU VM - Azure NC6 
+add port 8888 into netowrk panel
+http://{publicipofvm}:8888/?token={token after running azadehkhojandi/pytorchgpujupyter }
+check gpu on vm
 lsb_release -a
+
+
+
+#check Pytorch and cuda - inside container
+
 nvcc --version
 python
 import  torch
 torch.__version__
 torch.cuda.is_available()
-if torch.cuda.current_device():
+if torch.cuda.is_available():
   torch.cuda.get_device_name(torch.cuda.current_device())
 
 # Mask RCNN - inside container
@@ -88,7 +108,7 @@ for NC6
 
  `python demo.py`
 
-# Install Az copy in the container 
+# Install Az copy - inside container
 https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux
 
 `echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod/ xenial main" > azure.list`
@@ -115,8 +135,7 @@ plt.savefig('result.jpg')
 you should be able to see 'result.jpg' created 
 
 
-oneweek3@oneweek3:~/aztest$ sudo nvidia-docker run --rm -p 8888:8888    azadehkhojandi/pytorchgpujupyter -v "$PWD":/home/jovyan/work
-[FATAL tini (8)] exec -v failed: No such file or directory
+
 
 
 
