@@ -6,7 +6,7 @@ then
     echo "repo exist"
 else
     echo "repo doesn't exist"
-    cd /home/$NB_USER/work
+    
     git clone https://github.com/multimodallearning/pytorch-mask-rcnn.git
     
     echo "going inside repo"
