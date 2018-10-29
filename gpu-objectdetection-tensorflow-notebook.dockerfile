@@ -3,8 +3,8 @@ FROM azadehkhojandi/gpu-minimal-notebook
 USER root
 
 RUN pip install tensorflow-gpu
-
-RUN sudo apt-get install protobuf-compiler python-pil python-lxml python-tk
+RUN sudo apt-get update
+RUN apt-get -y install protobuf-compiler python-pil python-lxml python-tk
 RUN pip install --user Cython
 RUN pip install --user contextlib2
 
