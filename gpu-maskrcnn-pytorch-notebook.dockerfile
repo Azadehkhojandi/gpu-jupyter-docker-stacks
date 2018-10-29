@@ -4,17 +4,13 @@ ENV GPU_Arch=sm_37
 
 USER $NB_UID
 
-RUN  pip install opencv-python
-RUN  pip install azure
-RUN  pip install azure-storage --upgrade
-
 USER root
-COPY maskrcnn/clone.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/clone.sh
+COPY maskrcnn/clonefromfork.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/clonefromfork.sh
 RUN chmod 777 /home/$NB_USER/work
-
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["sh","-c","clone.sh && start-notebook.sh"]
+RUN clonefromfork.sh
+# ENTRYPOINT ["tini", "-g", "--"]
+# CMD ["sh","-c","clone.sh && start-notebook.sh"]
 
 
 
