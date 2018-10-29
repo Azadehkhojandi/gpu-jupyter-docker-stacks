@@ -1,6 +1,6 @@
 FROM azadehkhojandi/gpu-minimal-notebook
 
-USER $NB_UID
+USER root
 
 RUN pip install tensorflow-gpu
 
