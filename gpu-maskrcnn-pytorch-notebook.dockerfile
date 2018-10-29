@@ -14,8 +14,7 @@ RUN chmod +x /usr/local/bin/clone.sh
 RUN chmod 777 /home/$NB_USER/work
 
 ENTRYPOINT ["tini", "-g", "--"]
-CMD ["clone.sh", "&&","start-notebook.sh"]
-
+CMD ["sh","-c","clone.sh && start-notebook.sh"]
 
 
 
