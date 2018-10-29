@@ -1,5 +1,4 @@
 echo /home/$NB_USER/work/pytorch-mask-rcnn
-chmod 777 /home/$NB_USER/work/
 if [ -d /home/$NB_USER/work/pytorch-mask-rcnn ]   
 then 
     echo "repo exist"
