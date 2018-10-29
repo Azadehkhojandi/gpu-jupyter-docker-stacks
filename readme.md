@@ -169,6 +169,20 @@ pip install azure-storage --upgrade
 `$ sudo nvidia-docker run --rm -p 8888:8888  -v "$PWD":/home/jovyan/work azadehkhojandi/gpu-pytorch-notebook`
 
 # Buidling gpu-maskrcnn-pytorch-notebook image from docker file 
+* wip - unstable
+`$ sudo nvidia-docker build -t azadehkhojandi/gpu-objectdetection-tensorflow-notebook -f gpu-objectdetection-tensorflow-notebook.dockerfile .`
+
+`$ sudo docker image list`
+
+`$ sudo nvidia-docker tag {imageid} azadehkhojandi/gpu-objectdetection-tensorflow-notebook:barebone`
+
+`$ sudo nvidia-docker push azadehkhojandi/gpu-objectdetection-tensorflow-notebookk`
+
+`$ sudo nvidia-docker run --rm -p 8888:8888  -v "$PWD":/home/jovyan/work azadehkhojandi/gpu-objectdetection-tensorflow-notebook`
+
+
+# Buidling gpu-maskrcnn-pytorch-notebook image from docker file 
+* wip - unstable
 `$ sudo nvidia-docker build -t azadehkhojandi/gpu-maskrcnn-pytorch-notebook -f gpu-maskrcnn-pytorch-notebook.dockerfile .`
 
 `$ sudo docker image list`
