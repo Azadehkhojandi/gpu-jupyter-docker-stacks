@@ -13,7 +13,10 @@ COPY maskrcnn/clone.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/clone.sh
 RUN chmod 777 /home/$NB_USER/work
 
-ENTRYPOINT ["tini", "-g", "--","&&",  "clone.sh", "&&","start-notebook.sh"]
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["clone.sh", "&&","start-notebook.sh"]
+
+
 
 
 
