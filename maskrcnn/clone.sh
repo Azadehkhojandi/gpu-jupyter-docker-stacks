@@ -24,8 +24,8 @@ else
     cd ../../
     python build.py
     cd ../../
-    echo "add cocoapi as submodule"
-    git submodule add https://github.com/cocodataset/cocoapi.gi pytorch-mask-rcnn/cocoapi
+    echo "clone cocoapi"
+    git clone https://github.com/cocodataset/cocoapi.gi
     echo "build/settings cocoapi"
     cd cocoapi/PythonAPI
     make
