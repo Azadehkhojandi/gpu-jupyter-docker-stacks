@@ -12,6 +12,7 @@ else
     echo "getting weights"
     wget 'https://azpublicblob.blob.core.windows.net/public/mask_rcnn_coco.pth'
     wget 'https://azpublicblob.blob.core.windows.net/public/resnet50_imagenet.pth'
+    
     echo "build 1"
     cd nms/src/cuda/
     nvcc -c -o nms_kernel.cu.o nms_kernel.cu -x cu -Xcompiler -fPIC -arch=$GPU_Arch
@@ -26,6 +27,7 @@ else
     cd ../../
     echo "clone cocoapi"
     git clone https://github.com/cocodataset/cocoapi.git
+    ln -s cocoapi/PythonAPI/pycocotools/pycocotools
     echo "build/settings cocoapi"
     cd cocoapi/PythonAPI
     make
