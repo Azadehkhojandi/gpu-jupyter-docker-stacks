@@ -27,10 +27,10 @@ else
     cd ../../
     echo "clone cocoapi"
     git clone https://github.com/cocodataset/cocoapi.git
-    ln -s cocoapi/PythonAPI/pycocotools/pycocotools
     echo "build/settings cocoapi"
     cd cocoapi/PythonAPI
     make
     cd ../..
+    ln -s cocoapi/PythonAPI/pycocotools/pycocotools
     
 fi
