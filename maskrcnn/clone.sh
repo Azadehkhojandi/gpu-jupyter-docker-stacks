@@ -25,7 +25,7 @@ else
     python build.py
     cd ../../
     echo "clone cocoapi"
-    git clone https://github.com/cocodataset/cocoapi.gi
+    git clone https://github.com/cocodataset/cocoapi.git
     echo "build/settings cocoapi"
     cd cocoapi/PythonAPI
     make
