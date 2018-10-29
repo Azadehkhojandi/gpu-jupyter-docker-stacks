@@ -153,10 +153,20 @@ pip install azure-storage --upgrade
 
 `$ sudo nvidia-docker tag {imageid} azadehkhojandi/gpu-minimal-notebook:barebone`
 
-`$ sudo nvidia-docker push azadehkhojandi/gpujupyter`
+`$ sudo nvidia-docker push azadehkhojandi/gpu-minimal-notebook`
 
-`$ sudo nvidia-docker run --rm -p 8888:8888  -v "$PWD":/home/jovyan/work azadehkhojandi/pytorchgpujupyter`
+`$ sudo nvidia-docker run --rm -p 8888:8888  -v "$PWD":/home/jovyan/work azadehkhojandi/gpu-minimal-notebook`
 
+# Buidling gpu-pytorch-notebook image from docker file 
+`$ sudo nvidia-docker build -t azadehkhojandi/gpu-pytorch-notebook -f gpu-pytorch-notebook.dockerfile .`
+
+`$ sudo docker image list`
+
+`$ sudo nvidia-docker tag {imageid} azadehkhojandi/gpu-pytorch-notebook:barebone`
+
+`$ sudo nvidia-docker push azadehkhojandi/gpu-pytorch-notebook`
+
+`$ sudo nvidia-docker run --rm -p 8888:8888  -v "$PWD":/home/jovyan/work azadehkhojandi/gpu-pytorch-notebook`
 
 # Buidling gpu-maskrcnn-pytorch-notebook image from docker file 
 `$ sudo nvidia-docker build -t azadehkhojandi/gpu-maskrcnn-pytorch-notebook -f gpu-maskrcnn-pytorch-notebook.dockerfile .`

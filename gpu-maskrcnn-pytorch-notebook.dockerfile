@@ -1,4 +1,4 @@
-FROM azadehkhojandi/gpu-minimal-notebook
+FROM azadehkhojandi/gpu-pytorch-notebook
 
 ENV GPU_Arch=sm_37
 
