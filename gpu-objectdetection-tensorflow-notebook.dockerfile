@@ -19,8 +19,8 @@ WORKDIR /home/$NB_USER/work
 RUN mkdir -p tensorflow/models && \
     fix-permissions /home/$NB_USER && \
     fix-permissions /home/$NB_USER/work  && \
-    fix-permissions /home/$NB_USER/tensorflow && \
-    fix-permissions /home/$NB_USER/tensorflow/models
+    fix-permissions /home/$NB_USER/work/tensorflow && \
+    fix-permissions /home/$NB_USER/work/tensorflow/models
 
 
 RUN git clone https://github.com/tensorflow/models.git /tensorflow/models
@@ -29,7 +29,14 @@ WORKDIR /home/$NB_USER/work/tensorflow/models/research
 RUN wget -O protobuf.zip https://github.com/google/protobuf/releases/download/v3.3.0/protoc-3.3.0-linux-x86_64.zip
 RUN unzip protobuf.zip -d protoc330
 RUN export PROTOC="$(pwd)/protoc330/bin/protoc"
-RUN chmod 777 /home/$NB_USER/tensorflow/models
+# Setup work directory for backward-compatibility
+RUN mkdir -p tensorflow/models && \
+    fix-permissions /home/$NB_USER && \
+    fix-permissions /home/$NB_USER/work  && \
+    fix-permissions /home/$NB_USER/work/tensorflow && \
+    fix-permissions /home/$NB_USER/work/tensorflow/models
+
+RUN chmod 777 /home/$NB_USER/work/tensorflow/models
 RUN chmod 777 /home/$NB_USER/work/tensorflow/models/research/protoc330/bin/protoc
 
 # From tensorflow/models/research/
