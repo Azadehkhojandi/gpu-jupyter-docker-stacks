@@ -204,3 +204,6 @@ http://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-ca
 https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile
 
 https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook
+
+http://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
+
