@@ -3,7 +3,8 @@ FROM azadehkhojandi/gpu-minimal-notebook
 USER root
 
 RUN pip install tensorflow-gpu
-RUN sudo apt-get update && apt-get install -y --no-install-recommends apt-utils
+RUN sudo apt-get update
+RUN sudo apt-get -y install  apt-utils
 RUN sudo apt-get -y install  python-pil python-lxml python-tk
 
 
