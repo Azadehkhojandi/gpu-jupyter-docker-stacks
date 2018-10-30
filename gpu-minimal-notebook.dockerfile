@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Instal basic utilities
 RUN apt-get update && apt-get -yq dist-upgrade \
+  && apt-get -y install  apt-utils \
   && apt-get install -yq --no-install-recommends \
         wget \
         bzip2 \
@@ -148,6 +149,7 @@ WORKDIR /home/$NB_USER/work
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
+
 
 
 # Add local files as late as possible to avoid cache busting

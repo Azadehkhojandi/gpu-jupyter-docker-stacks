@@ -5,9 +5,10 @@ USER $NB_UID
 RUN pip install tensorflow-gpu
 
 USER root
-RUN sudo apt-get update
-RUN sudo apt-get -y install  apt-utils
-RUN sudo apt-get -y install  python-pil python-lxml python-tk
+RUN apt-get update && apt-get -yq dist-upgrade \
+  && apt-get -y install  python-pil python-lxml python-tk \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
 RUN pip install --user Cython
@@ -24,6 +25,11 @@ RUN mkdir -p tensorflow/models && \
 
 
 RUN git clone https://github.com/tensorflow/models.git /home/$NB_USER/work/tensorflow/models/
+
+RUN git clone https://github.com/cocodataset/cocoapi.git
+RUN cd cocoapi/PythonAPI
+RUN make
+RUN cp -r pycocotools /home/$NB_USER/work/tensorflow/models/research/
 
 WORKDIR /home/$NB_USER/work/tensorflow/models/research
 # From tensorflow/models/research/
