@@ -23,7 +23,8 @@ RUN mkdir -p tensorflow/models && \
     fix-permissions /home/$NB_USER/work/tensorflow/models
 
 
-RUN git clone https://github.com/tensorflow/models.git /tensorflow/models
+RUN git clone https://github.com/tensorflow/models.git /home/$NB_USER/work/tensorflow/models/
+RUN ls /home/$NB_USER/work/tensorflow/models/
 WORKDIR /home/$NB_USER/work/tensorflow/models/research
 # From tensorflow/models/research/
 RUN wget -O protobuf.zip https://github.com/google/protobuf/releases/download/v3.3.0/protoc-3.3.0-linux-x86_64.zip
@@ -40,7 +41,9 @@ RUN chmod 777 /home/$NB_USER/work/tensorflow/models
 RUN chmod 777 /home/$NB_USER/work/tensorflow/models/research/protoc330/bin/protoc
 
 # From tensorflow/models/research/
-RUN echo $PROTOC
+RUN ls /home/$NB_USER/work/tensorflow/models
+RUN ls /home/$NB_USER/work/tensorflow/models/research
+RUN ls /home/$NB_USER/work/tensorflow/models/research/object_detection
 RUN echo $pwd
 RUN $PROTOC /home/$NB_USER/work/tensorflow/models/research/object_detection/protos/*.proto --python_out=.
 RUN echo $PYTHONPATH
