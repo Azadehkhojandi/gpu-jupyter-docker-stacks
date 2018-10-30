@@ -12,15 +12,25 @@ RUN sudo apt-get -y install  python-pil python-lxml python-tk
 USER $NB_UID
 RUN pip install --user Cython
 RUN pip install --user contextlib2
-RUN mkdir -p /tensorflow/models
+
+USER root
+WORKDIR /home/$NB_USER/work
+# Setup work directory for backward-compatibility
+RUN mkdir /home/$NB_USER/work/tensorflow/models && \
+    fix-permissions /home/$NB_USER && \
+    fix-permissions /home/$NB_USER/work  && \
+    fix-permissions /home/$NB_USER/tensorflow && \
+    fix-permissions /home/$NB_USER/tensorflow/models
+
+
 RUN git clone https://github.com/tensorflow/models.git /tensorflow/models
-WORKDIR /tensorflow/models/research
+WORKDIR /home/$NB_USER/work/tensorflow/models/research
 # From tensorflow/models/research/
 RUN wget -O protobuf.zip https://github.com/google/protobuf/releases/download/v3.3.0/protoc-3.3.0-linux-x86_64.zip
 RUN unzip protobuf.zip -d protoc330
 RUN export PROTOC="$(pwd)/protoc330/bin/protoc"
-RUN chmod 777 /tensorflow/models/research
-RUN chmod 777 $(pwd)/protoc330/bin/protoc
+RUN chmod 777 /home/$NB_USER/tensorflow/models
+RUN chmod 777 /home/$NB_USER/work/tensorflow/models/research/protoc330/bin/protoc
 
 # From tensorflow/models/research/
 RUN "$PROTOC" object_detection/protos/*.proto --python_out=.
