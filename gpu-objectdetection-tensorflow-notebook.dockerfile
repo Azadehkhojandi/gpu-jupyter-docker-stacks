@@ -42,7 +42,7 @@ RUN chmod 777 /home/$NB_USER/work/tensorflow/models/research/protoc330/bin/proto
 # From tensorflow/models/research/
 RUN echo $PROTOC
 RUN echo $pwd
-RUN $PROTOC object_detection/protos/*.proto --python_out=.
+RUN $PROTOC /home/$NB_USER/work/tensorflow/models/research/object_detection/protos/*.proto --python_out=.
 RUN echo $PYTHONPATH
 RUN export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 RUN echo $PYTHONPATH
