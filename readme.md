@@ -176,7 +176,7 @@ pip install azure-storage --upgrade
 
 `$ sudo nvidia-docker tag {imageid} azadehkhojandi/gpu-objectdetection-tensorflow-notebook:barebone`
 
-`$ sudo nvidia-docker push azadehkhojandi/gpu-objectdetection-tensorflow-notebookk`
+`$ sudo nvidia-docker push azadehkhojandi/gpu-objectdetection-tensorflow-notebook`
 
 `$ sudo nvidia-docker run --rm -p 8888:8888  -v "$PWD":/home/jovyan/work azadehkhojandi/gpu-objectdetection-tensorflow-notebook`
 
@@ -206,4 +206,6 @@ https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile
 https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook
 
 http://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/
+
+https://towardsdatascience.com/tensorflow-object-detection-with-docker-from-scratch-5e015b639b0b
 

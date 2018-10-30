@@ -45,4 +45,5 @@ RUN ./protoc330/bin/protoc object_detection/protos/*.proto --python_out=.
 RUN export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
 # Switch back to jovyan to avoid accidental container runs as root
+WORKDIR /home/$NB_USER/work
 USER $NB_UID

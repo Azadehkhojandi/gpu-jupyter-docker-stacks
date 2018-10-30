@@ -11,40 +11,35 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Instal basic utilities
 RUN apt-get update && apt-get -yq dist-upgrade \
- && apt-get install -yq --no-install-recommends \
-    wget \
-    bzip2 \
-    ca-certificates \
-    sudo \
-    locales \
-    fonts-liberation \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-# Install all OS dependencies for fully functional notebook server
-RUN apt-get update && apt-get install -yq --no-install-recommends \
-    build-essential \
-    emacs \
-    git \
-    inkscape \
-    jed \
-    libsm6 \
-    libxext-dev \
-    libxrender1 \
-    lmodern \
-    netcat \
-    pandoc \
-    python-dev \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
-    texlive-generic-recommended \
-    texlive-latex-base \
-    texlive-latex-extra \
-    texlive-xetex \
-    unzip \
-    nano \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+  && apt-get install -yq --no-install-recommends \
+        wget \
+        bzip2 \
+        ca-certificates \
+        sudo \
+        locales \
+        fonts-liberation \
+        build-essential \
+        emacs \
+        git \
+        inkscape \
+        jed \
+        libsm6 \
+        libxext-dev \
+        libxrender1 \
+        lmodern \
+        netcat \
+        pandoc \
+        python-dev \
+        texlive-fonts-extra \
+        texlive-fonts-recommended \
+        texlive-generic-recommended \
+        texlive-latex-base \
+        texlive-latex-extra \
+        texlive-xetex \
+        unzip \
+        nano \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
@@ -60,8 +55,8 @@ ENV CONDA_DIR=/opt/conda \
     NB_GID=100 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    LANGUAGE=en_US.UTF-8
-ENV PATH=$CONDA_DIR/bin:$PATH \
+    LANGUAGE=en_US.UTF-8 \
+    PATH=$CONDA_DIR/bin:$PATH \
     HOME=/home/$NB_USER
 
 
@@ -148,13 +143,12 @@ RUN conda install -y h5py scikit-learn matplotlib seaborn scikit-image  scipy   
 USER root
 
 EXPOSE 8888
-WORKDIR $HOME
+WORKDIR /home/$NB_USER/work
 
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
-RUN echo  $HOME
 
 # Add local files as late as possible to avoid cache busting
 COPY jupyter/start.sh /usr/local/bin/
