@@ -16,7 +16,7 @@ RUN pip install --user contextlib2
 USER root
 WORKDIR /home/$NB_USER/work
 # Setup work directory for backward-compatibility
-RUN mkdir /home/$NB_USER/work/tensorflow/models && \
+RUN mkdir -p tensorflow/models && \
     fix-permissions /home/$NB_USER && \
     fix-permissions /home/$NB_USER/work  && \
     fix-permissions /home/$NB_USER/tensorflow && \
