@@ -46,7 +46,7 @@ RUN chmod 777 /home/$NB_USER/work/tensorflow/models/research/protoc330/bin/proto
 
 WORKDIR /home/$NB_USER/work/tensorflow/models/research
 RUN ls
-RUN ./protoc330/bin/protoc /object_detection/protos/*.proto --python_out=.
+RUN ./protoc330/bin/protoc object_detection/protos/*.proto --python_out=.
 RUN echo "$PYTHONPATH"
 RUN export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 RUN echo "$PYTHONPATH"
