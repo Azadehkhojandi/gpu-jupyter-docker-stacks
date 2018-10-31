@@ -64,7 +64,7 @@ ENV CONDA_DIR=/opt/conda \
 
 ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
 
-RUN chmod +x /usr/local/bin/fix-permissions
+RUN chmod 777 /usr/local/bin/fix-permissions
 
 
 
