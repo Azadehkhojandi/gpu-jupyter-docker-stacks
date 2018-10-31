@@ -24,12 +24,14 @@ RUN mkdir -p tensorflow/models && \
     fix-permissions /home/$NB_USER/work/tensorflow/models
 
 
-RUN git clone https://github.com/tensorflow/models.git /home/$NB_USER/work/tensorflow/models/
+RUN git clone https://github.com/tensorflow/models.git tensorflow/models/
 
-RUN git clone https://github.com/cocodataset/cocoapi.git
-RUN cd cocoapi/PythonAPI
-RUN make
-RUN cp -r pycocotools /home/$NB_USER/work/tensorflow/models/research/
+RUN git clone https://github.com/cocodataset/cocoapi.git && \
+    cd cocoapi/PythonAPI && \
+    make  && \
+    cd ..\..\ && \
+    ls && \
+    cp -r  cocoapi/PythonAPI/pycocotools tensorflow/models/research/
 
 WORKDIR /home/$NB_USER/work/tensorflow/models/research
 # From tensorflow/models/research/
