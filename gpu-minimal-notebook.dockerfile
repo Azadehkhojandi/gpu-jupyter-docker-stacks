@@ -63,7 +63,7 @@ ENV CONDA_DIR=/opt/conda \
 
 
 ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
-
+RUN chmod 777 /usr/local/bin
 RUN chmod 777 /usr/local/bin/fix-permissions
 
 
@@ -78,15 +78,15 @@ RUN groupadd wheel -g 11 && \
     mkdir -p $CONDA_DIR && \
     chown $NB_USER:$NB_GID $CONDA_DIR && \
     chmod g+w /etc/passwd && \
-    fix-permissions $HOME && \
-    fix-permissions $CONDA_DIR
+    chmod 777 $HOME && \
+    chmod 777 $CONDA_DIR
 
 USER $NB_UID
 
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER && \
-    fix-permissions /home/$NB_USER/work
+    chmod 777 /home/$NB_USER && \
+    chmod 777 /home/$NB_USER/work
 
 
 # Install conda as jovyan and check the md5 sum provided on the download site
